@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>보안ING</title>
+    <script src="https://kit.fontawesome.com/2abc095ccc.js" crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="{{ url_for('static', filename='style.css') }}" rel="stylesheet">
+    <script src="{{ url_for('static', filename='main.js') }}" defer></script>
+</head>
+
+<body>
+    <input type="checkbox" id="main-navigation-toggle" class="btn btn--close" title="Toggle main navigation" />
+    <label for="main-navigation-toggle">
+      <span></span>
+    </label>
+    <nav id="main-navigation" class="nav-main">
+      <ul class="menu">
+        <li class="menu__item">
+          <a class="menu__link" href="{{ url_for('home') }}">Home</a>
+        </li>
+        <li class="menu__item">
+          <a class="menu__link" href="{{ url_for('news') }}">News</a>
+        </li>
+        <li class="menu__item">
+          <a class="menu__link" href="{{ url_for('contest') }}">Contest</a>
+        </li>
+        <li class="menu__item">
+          <a class="menu__link" href="{{ url_for('job') }}">Job</a>
+        </li>
+        <li class="menu__item">
+          <a class="menu__link" href="{{ url_for('study') }}">Study</a>
+        </li>
+      </ul>
+    </nav>
+
+    {% block content %}
+    {% endblock %}
+
+</body>
+
+</html>

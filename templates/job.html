@@ -1,0 +1,174 @@
+{% extends 'base.html' %}
+{% block content %}
+
+ <style type="text/css">
+     @import url('https://fonts.googleapis.com/css2?family=Nanum+Gothic+Coding:wght@400;700&display=swap');
+    body {
+        font-family: 'Nanum Gothic', sans-serif;
+    }
+    .wrap {
+        width: 90%;
+        margin: 50px auto;
+        text-align: center;
+    }
+    .job-title {
+        font-size: 28px;
+        font-weight: bolder;
+    }
+    button {
+        border-style: none;
+        padding: 10px;
+        background-color: #364c62;
+        color: white;
+        transition: all 250ms ease;
+    }
+    .form-group {
+        margin-bottom: 20px;
+    }
+    input {
+        width: 300px;
+    }
+    textarea {
+        width: 300px;
+        height: 100px;
+    }
+    button:hover {
+        background-color: burlywood;
+        color: #364c62;
+        transform: scale(1.1);
+        font-weight: bold;
+        cursor: pointer;
+    }
+    #post-box {
+        width: 500px;
+        margin: 20px auto;
+        padding: 30px;
+        border: black solid;
+        border-radius: 5px;
+    }
+    #cards-box {
+        margin-top: 50px;
+        display: flex;
+        flex-wrap: wrap;
+    }
+    .card {
+        background-color: #18181a;
+        border-radius: 3px;
+        width: 200px;
+        padding: 20px;
+        margin: 10px;
+    }
+    .card-img-top {
+        width: 150px;
+        height: 100px;
+        margin-bottom: 10px;
+    }
+    a {
+        color: burlywood;
+        text-decoration: none;
+    }
+    a:hover {
+        color: orange;
+    }
+    .comment {
+        color: lightgray;
+    }
+    .card-body {
+        width: 200px;
+        text-align: center;
+        margin: auto;
+    }
+</style>
+
+<div class="wrap">
+    <div class="jumbotron">
+        <div class="job-title">나만의 취뽀 치트키</div>
+        <p class="lead">관심있는 기업의 채용 링크를 저장하고 취직을 위해 어떤 공부가 더 필요할 지 메모해보세요!</p>
+        <hr class="my-4">
+        <p class="lead">
+            <button onclick="openClose()" id="btn-post-box" type="button" class="btn btn-primary">포스팅 박스 열기
+            </button>
+        </p>
+    </div>
+    <div id="post-box" class="form-post" style="display:none">
+        <div>
+            <div class="form-group">
+                <label for="post-url">URL</label>
+                <input id="post-url" class="form-control" placeholder="">
+            </div>
+            <div class="form-group">
+                <label for="post-comment">메모</label>
+                <textarea id="post-comment" class="form-control" rows="2"></textarea>
+            </div>
+            <button type="button" class="btn btn-primary" onclick="postArticle()">메모 저장</button>
+        </div>
+    </div>
+    <div id="cards-box" class="card-columns">
+
+    </div>
+</div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+
+<script>
+    $(document).ready(function () {
+        showArticles();
+    });
+
+    function openClose() {
+        if ($("#post-box").css("display") == "block") {
+            $("#post-box").hide();
+            $("#btn-post-box").text("포스팅 박스 열기");
+        } else {
+            $("#post-box").show();
+            $("#btn-post-box").text("포스팅 박스 닫기");
+        }
+    }
+
+    function postArticle() {
+        let url = $('#post-url').val()
+        let memo = $('#post-comment').val()
+        $.ajax({
+            type: "POST",
+            url: "/job/memo",
+            data: {url_give: url, memo_give: memo},
+            success: function (response) { // 성공하면
+                alert(response["msg"]);
+                window.location.reload()
+            }
+        })
+    }
+
+    function showArticles() {
+        $.ajax({
+            type: "GET",
+            url: "/job/memo",
+            data: {},
+            success: function (response) {
+                let jobs = response['jobs']
+                for (let i = 0; i < jobs.length; i++) {
+                    let title = jobs[i]['title']
+                    let image = jobs[i]['image']
+                    let url = jobs[i]['url']
+                    let memo = jobs[i]['memo']
+
+                    let temp_html = `<div class="card">
+                                        <img class="card-img-top"
+                                             src="${image}"
+                                             alt="Card image cap">
+                                        <div class="card-body">
+                                            <a target="_blank" href="${url}" class="card-title">${title}</a>
+                                            <p class="comment">${memo}</p>
+                                        </div>
+                                    </div>`
+                    $('#cards-box').append(temp_html)
+                }
+            }
+        })
+    }
+</script>
+
+{% endblock %}

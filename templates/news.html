@@ -1,0 +1,90 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Nanum+Gothic+Coding:wght@400;700&display=swap');
+    body {
+        font-family: 'Nanum Gothic', sans-serif;
+    }
+    h3 {
+        margin:5px;
+    }
+    a {
+        text-decoration: none;
+        color: #364c62;
+    }
+    a:hover {
+        color: burlywood;
+    }
+    .titles,
+    .news-area {
+        display: flex;
+        justify-content: space-around;
+    }
+    .titles {
+        margin-top: 50px;
+        margin-bottom: 30px;
+        font-weight: bolder;
+        font-size: 28px;
+    }
+    .today-news-box {
+        width:43vw;
+        padding-left: 20px;
+        background-color:white;
+        border-radius: 4px;
+        margin: 10px;
+    }
+    .line {
+        border: 1px solid #18181a;
+        width: 45vw;
+        margin:20px;
+    }
+    .weekly-news {
+        background-color: #18181a;
+        width:45vw;
+        margin: 10px 20px;
+        padding: 10px;
+    }
+    .weekly-news-item {
+        padding: 7px;
+        color: white;
+        font-weight: bold;
+        font-size: 17px;
+        text-align: center;
+        transition: all 200ms ease;
+    }
+    .weekly-news-item:hover {
+        color: burlywood;
+    }
+</style>
+
+<div class="titles">
+    <div class="title1">오늘의 뉴스</div>
+    <div class="title2">주간 인기 뉴스</div>
+</div>
+
+<div class="news-area">
+    <div class="left">
+        <div class="today-news">
+            <div class="line"></div>
+            {% for i in list %}
+                <div class="today-news-box">
+                    <h3><a  class="title-a" href="{{ i['sub_str'] }}">{{ i['title'] }}</a></h3>
+                    <p style="font-size: 15px; font-weight: bold; color: gray; margin: 15px auto">{{ i['sub_news_text'] }}</p>
+                    <p style="font-size: 14px; color: black; margin: 0;">{{ i['abbr'] }}</p>
+                </div>
+                <div class="line"></div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <div class="right">
+        <div class="weekly-news">
+            {% for i in week_list %}
+                <p class="weekly-news-item"><a href="{{ i['sub_str'] }}">{{ i['title'] }}</a></p>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
+{% endblock %}

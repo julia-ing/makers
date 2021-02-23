@@ -1,0 +1,70 @@
+{% extends 'base.html' %}
+{% block content %}
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Nanum+Gothic+Coding:wght@400;700&display=swap');
+    body {
+        font-family: 'Nanum Gothic', sans-serif;
+    }
+    .contest-title {
+        text-align: center;
+        margin-top: 50px;
+        margin-bottom: 30px;
+        font-weight: bolder;
+        font-size: 28px;
+    }
+    a {
+        color: white;
+        text-decoration: none;
+    }
+    a:hover {
+        color: burlywood;
+    }
+    .contest-box {
+        background-color: #18181a;
+        width: 75vw;
+        margin:  auto;
+        display: flex;
+        padding: 40px;
+        color: white;
+        text-align: center;
+        border: 1px solid white;
+    }
+    .category {
+        width: 13vw;
+        border: 1px solid burlywood;
+        padding: 8px 5px 5px 5px;
+    }
+    .contest-info {
+        width: 50vw;
+    }
+    .contest-host {
+        font-size: 12px;
+        margin-top: 5px;
+        color: gray;
+    }
+    .contest-date {
+        margin: auto;
+    }
+    .d-day {
+        width: 7vw;
+        color: burlywood;
+        font-size: 32px;
+        font-weight: bold;
+        margin-left: 20px;
+    }
+</style>
+
+<div class="contest-title">접수 중인 공모전</div>
+    {% for i in list %}
+        <div class="contest-box">
+            <div class="category">{{ i['category'] }}</div>
+            <div class="contest-info">
+                <div class="contest-name"><a href="{{ i['sub_str'] }}">{{ i['title'] }}</a></div>
+                <div class="contest-host">{{ i['host'] }}</div>
+            </div>
+            <div class="contest-date">{{ i['date'] }}</div>
+            <div class="d-day">{{ i['d_day'] }}</div>
+        </div>
+    {% endfor %}
+
+{% endblock %}

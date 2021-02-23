@@ -1,0 +1,281 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Nanum+Gothic+Coding:wght@400;700;800&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Jua&display=swap');
+    body {
+        font-family: 'Nanum Gothic', sans-serif;
+    }
+    .study-title {
+        font-size: 28px;
+        font-weight: bolder;
+        text-align: center;
+        margin-top: 50px;
+        margin-bottom: 2%;
+    }
+    .container {
+        display: flex;
+    }
+    .left {
+        background-color: #18181a;
+        width: 40vw;
+        height: 75%;
+        margin: 30px;
+        color: white;
+        overflow: auto;
+    }
+    table {
+        width: 90%;
+        margin: 20px;
+        border: 1px solid white;
+        overflow: auto;
+    }
+    th {
+        font-size: 18px;
+        border: 1px solid white;
+        background-color: burlywood;
+        padding: 2%;
+    }
+    td {
+        border: 1px solid white;
+        padding: 2% 0;
+        font-size: 14px;
+        text-align: center;
+    }
+    .add-category {
+        float: right;
+        margin: 0px 20px 20px 0;
+        padding: 7px;
+        transition: all 250ms ease;
+    }
+    button:hover {
+        background-color: burlywood;
+        color: white;
+        transform: scale(1.1);
+        cursor: pointer;
+    }
+    .right {
+        font-size: 18px;
+        background-color: white;
+        border: 2px solid #18181a;
+        width: 50vw;
+        height: 68vh;
+        margin: 1%;
+        padding: 2% 2% 1% 2%;
+    }
+    .today-study {
+        font-size: 26px;
+        text-align: center;
+        margin: auto;
+        font-weight: bold;
+        display: none;
+    }
+    .today-study.page {
+        font-size: 26px;
+        text-align: center;
+        margin: 25vh;
+        font-weight: bold;
+        display: block;
+    }
+    .inner-box {
+        display: flex;
+        justify-content: space-around;
+        margin-top: 5%;
+    }
+
+    .inner-box.page {
+        display: none;
+    }
+
+    .percentage-container {
+        background-color: #18181a;
+        color: white;
+        width: 70%;
+        height: 42vh;
+        padding: 50px 20px;
+        text-align: center;
+        display: none;
+    }
+    .percentage-container.page {
+        display: block;
+    }
+    #percentage {
+        margin: 50px 10px;
+        width: 10vw;
+        height: 15vh;
+        font-size: 50px;
+    }
+    .next-study {
+        margin: 18% 0 18% 2%;
+        display: flex;
+        flex-direction: column;
+        font-weight: bold;
+    }
+    .select-study, .add-btn {
+        transition: all 250ms ease;
+        padding: 7px;
+        margin: 10px;
+    }
+    .per-btn {
+        cursor: pointer;
+        padding: 6px;
+    }
+    .today-study-item {
+        color: #18181a;
+        font-family: 'Jua', sans-serif;
+        letter-spacing: 0.2em;
+        font-size: 28px;
+    }
+    #add-box {
+        margin: 70px 10px 10px 20px;
+    }
+    #category, #level {
+        margin-bottom: 10px;
+    }
+    .fa-trash-alt {
+        float: right;
+        margin-right: 20px;
+        cursor: pointer;
+        color: gray;
+    }
+
+</style>
+
+<div class="study-title">작심 3일 스터디</div>
+<div class="container">
+    <div class="left">
+        <table id="myTable">
+          <thead>
+            <tr>
+              <th>CATEGORY</th><th>LEVEL</th>
+            </tr>
+          </thead>
+          <tbody id="category-box">
+
+          </tbody>
+        </table>
+        <button class="add-category" onclick="openClose()">추가하기</button>
+        <div id="add-box" class="form-post" style="display:none">
+            <div>
+                <div class="form-group">
+                    <label for="category">Category</label>
+                    <input id="category" class="form-control" placeholder="">
+                </div>
+                <div class="form-group">
+                    <label for="level">Level</label>
+                    <input id="level" class="form-control" placeholder="" type="number">
+                </div>
+                <button type="button" class="add-btn" onclick="postCategory()">카테고리 추가</button>
+            </div>
+        </div>
+    </div>
+    <div class="right">
+        <div class="today-study">오늘은 [ <span class="today-study-item" id="todayStudy"></span>]을 공부하는 날입니다</br></br>Move Forward!!</div>
+        <div class="inner-box">
+            <div class="percentage-container">
+                    양심적으로 난 3일간 [ <span class="today-study-item" id="todayStudy2" style="color: burlywood;"></span>] 공부를..
+                    <div class="percentage-box">
+                        <input id="percentage" class="percentage" name="percentage" type="number" step="10">% 했다!!
+                    </div>
+                    <input type="submit" style="float: right;" class="per-btn">
+            </div>
+            <div class="next-study">
+                <label for="studies">다음 작심 3일 스터디 :</label>
+                <select name="studies" id="studies" class="select-study" onchange="location = this.value">
+                    <option value="">스터디 선택</option>
+                </select>
+                <p style="font-size: 16px; color: gray;">(3일동안 집중할 스터디를 선택해주세요)</p>
+            </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+
+<script>
+    $(document).ready(function () {
+        showCategories();
+    });
+
+    function openClose() {
+        if ($("#add-box").css("display") == "block") {
+            $("#add-box").hide();
+        } else {
+            $("#add-box").show();
+        }
+    }
+
+    function postCategory() {
+        let category = $('#category').val()
+        let level = $('#level').val()
+        $.ajax({
+            type: "POST",
+            url: "/study/add",
+            data: {category_give: category, level_give: level},
+            success: function (response) { // 성공하면
+                alert(response["msg"]);
+                window.location.reload()
+            }
+        })
+    }
+
+    function showCategories() {
+        $.ajax({
+            type: "GET",
+            url: "/study/add",
+            data: {},
+            success: function (response) {
+                let categories = response['categories']
+                for (let i = 0; i < categories.length; i++) {
+                    let category = categories[i]['category']
+                    let level = categories[i]['level']
+
+                    let temp_html = `<tr>
+                                      <td>${category}</td><td>${level}<i class="fas fa-trash-alt" onclick="deleteCategory(${level})"></i></td>
+                                    </tr>`
+                    let temp_html2 = `<option value="/study/${category}/sub">${category}</option>`
+                    $('#category-box').append(temp_html)
+                    $('#studies').append(temp_html2)
+                }
+            }
+        })
+    }
+
+
+    function deleteCategory(item)  {
+        $.ajax({
+            type: "POST",
+            url: "/study/delete",
+            data: {level_give: item},
+            success: function (response) {
+                alert(response["msg"]);
+                window.location.reload();
+            }
+        })
+    }
+
+    function selectStudy(val) {
+        $('#todayStudy').empty();
+        $('#todayStudy').html(val);
+        $('#todayStudy2').empty();
+        $('#todayStudy2').html(val);
+        $('#todayStudy').prop('selected', true);
+        document.querySelector('.inner-box').classList.add('page');
+        document.querySelector('.today-study').classList.add('page');
+        setTimeout("time()",3000)
+    }
+
+    function time() {
+        document.querySelector('.inner-box').classList.remove('page');
+        document.querySelector('.today-study').classList.remove('page');
+        document.querySelector('.percentage-container').classList.add('page');
+    }
+
+</script>
+
+{% endblock %}
