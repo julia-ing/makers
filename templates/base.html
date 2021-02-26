@@ -29,10 +29,10 @@
           <a class="menu__link" href="{{ url_for('contest') }}">Contest</a>
         </li>
         <li class="menu__item">
-          <a class="menu__link" href="{{ url_for('job') }}">Job</a>
+          <a class="menu__link" href="{{ url_for('job', user=session['user']) }}">Job</a>
         </li>
         <li class="menu__item">
-          <a class="menu__link" href="{{ url_for('study') }}">Study</a>
+          <a class="menu__link" href="{{ url_for('study', user=session['user']) }}">Study</a>
         </li>
       </ul>
     </nav>

@@ -1,10 +1,85 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>$Title$</title>
-</head>
-<body>
-$END$
-</body>
-</html>
+{% extends 'base.html' %}
+{% block content %}
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Nanum+Gothic+Coding:wght@400;700;800&display=swap');
+    * {
+        background-color: #18181a;
+        color: white;
+    }
+    .wrap {
+        padding-top: 25vh;
+        padding-left: 36vw;
+        font-family: 'Nanum Gothic', sans-serif;
+    }
+    caption {
+        margin: 10px;
+    }
+    .name, .email, .id, .pw, .re-pw {
+        background-color: white;
+        width: 200px;
+        margin: 5px 10px;
+        color: black;
+    }
+    .submit, .main {
+        width: 100px;
+        margin: 10px 10vw;
+        padding: 7px;
+        transition: all 250ms ease;
+        cursor: pointer;
+        border: 1px solid white;
+        color: white;
+        border-radius: 5px;
+    }
+    .submit:hover, .main:hover {
+        transform: scale(1.1);
+        background-color: burlywood;
+        font-weight: bold;
+    }
+</style>
+
+<div class="wrap">
+    <form action="/register" method="post">
+        <table>
+            <thead>
+                <caption style="font-size: 24px; font-weight: bolder">
+                    <i class="fas fa-lock"></i>
+                    회원가입
+                    <i class="fas fa-lock"></i>
+                </caption>
+            </thead>
+            <tbody>
+            <tr>
+                <td>이름</td>
+                <td><input type="text" name="username" class="name"></td>
+            </tr>
+            <tr>
+                <td>이메일</td>
+                <td><input type="text" name="email" class="email"></td>
+            </tr>
+            <tr>
+                <td>아이디</td>
+                <td><input type="text" name="userid" class="id"></td>
+            </tr>
+            <tr>
+                <td>비밀번호</td>
+                <td><input type="text" name="password" class="pw"></td>
+            </tr>
+            <tr>
+                <td>비밀번호 확인</td>
+                <td><input type="text" name="re_password" class="re-pw"></td>
+            </tr>
+            </tbody>
+        </table>
+        <input type="submit" class="submit">
+    </form>
+    <button onclick="location.href='/'" class="main">메인으로</button>
+</div>
+
+
+{% for msg in get_flashed_messages() %}
+    <script>
+        alert('{{msg}}');
+    </script>
+{% endfor %}
+
+{% endblock %}

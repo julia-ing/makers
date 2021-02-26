@@ -1,10 +1,55 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>$Title$</title>
-</head>
-<body>
-$END$
-</body>
-</html>
+{% extends 'base.html' %}
+{% block content %}
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Nanum+Gothic+Coding:wght@400;700;800&display=swap');
+    * {
+        background-color: #18181a;
+    }
+    .wrap {
+        padding-top: 25vh;
+        font-family: 'Nanum Gothic', sans-serif;
+    }
+    .plz-login,
+    .plz-register{
+        width: 360px;
+        margin: 30px auto 0 auto;
+        text-align: center;
+    }
+    .plz-login {
+        font-size: 22px;
+        font-weight: bolder;
+        color: white;
+    }
+    .plz-register {
+        color: gray;
+    }
+    button {
+        padding: 7px;
+        margin: 15px;
+        font-family: 'Nanum Gothic', sans-serif;
+        transition: all 250ms ease;
+        cursor: pointer;
+        background-color: #18181a;
+        border: 1px solid white;
+        color: white;
+        border-radius: 5px;
+    }
+    button:hover {
+        transform: scale(1.1);
+        background-color: burlywood;
+        font-weight: bold;
+    }
+</style>
+<div class="wrap">
+    <div class="plz-login">
+        <i class="fas fa-lock"></i>
+        로그인이 필요한 페이지입니다
+        <i class="fas fa-lock"></i>
+        <button onclick="location.href='/login'">로그인 페이지 바로가기</button>
+    </div>
+    <div class="plz-register">
+        아직 회원이 아니세요?
+        <button onclick="location.href='/register'">회원가입 페이지 바로가기</button>
+    </div>
+</div>
+{% endblock %}

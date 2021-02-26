@@ -1,10 +1,82 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>$Title$</title>
-</head>
-<body>
-$END$
-</body>
-</html>
+{% extends 'base.html' %}
+{% block content %}
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Nanum+Gothic+Coding:wght@400;700;800&display=swap');
+    * {
+        background-color: #18181a;
+        color: white;
+    }
+    .wrap {
+        padding-top: 25vh;
+        padding-left: 38vw;
+        font-family: 'Nanum Gothic', sans-serif;
+    }
+    caption {
+        margin: 10px;
+    }
+    .id, .pw {
+        background-color: white;
+        color: black;
+        width: 200px;
+        margin: 10px auto;
+    }
+    .submit, .main {
+        width: 100px;
+        margin: 10px 8vw;
+        padding: 7px;
+        transition: all 250ms ease;
+        cursor: pointer;
+        border: 1px solid white;
+        color: white;
+        border-radius: 5px;
+    }
+    .submit:hover, .main:hover {
+        transform: scale(1.1);
+        background-color: burlywood;
+        font-weight: bold;
+    }
+</style>
+
+<div class="wrap">
+    <form action="/login" method="post">
+        <table>
+            <thead>
+                <caption style="font-size: 24px; font-weight: bolder">
+                    <i class="fas fa-lock"></i>
+                    로그인
+                    <i class="fas fa-lock"></i>
+                </caption>
+            </thead>
+            <tbody>
+            <tr>
+                <td>아이디</td>
+                <td><input type="text" name="id_input" id="id" class="id"></td>
+            </tr>
+            <tr>
+                <td>비밀번호</td>
+                <td><input type="text" name="pw_input" class="pw"></td>
+            </tr>
+            </tbody>
+        </table>
+        <input type="submit" class="submit" onclick="welcome()">
+    </form>
+    <button class="main" onclick="location.href='/'">메인으로</button>
+</div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+<script>
+    function welcome() {
+        let user = $('#id').val()
+        alert(user + "님 환영합니다!");
+    }
+</script>
+
+{% for msg in get_flashed_messages() %}
+    <script>
+        alert('{{msg}}');
+    </script>
+{% endfor %}
+{% endblock %}

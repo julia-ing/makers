@@ -1,10 +1,170 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>$Title$</title>
-</head>
-<body>
-$END$
-</body>
-</html>
+{% extends 'base.html' %}
+{% block content %}
+<style>
+   @import url('https://fonts.googleapis.com/css2?family=Nanum+Gothic+Coding:wght@400;700&display=swap');
+* {
+  margin: 0;
+  padding: 0;
+}
+body {
+  background: url("https://www.ge.com/research/sites/default/files/styles/hero_banner/public/images/capabilities/2018-11/technology-domain-cyber-security-hero.jpg?itok=xlm5aFit") center/cover fixed;
+  height: 200vh;
+  font-family: 'Nanum Gothic Coding', monospace;
+}
+.text {
+  position: fixed;
+  top: 45%;
+  left: 50%;
+  transform: translateX(-50%) translateY(-50%);
+  list-style: none;
+  border-bottom: 0;
+}
+.text.hidden {
+  border-bottom: 1px solid #fff;
+}
+.text li {
+  display: inline-block;
+  float: left;
+  font-weight: bold;
+  font-size: 2.8em;
+  color: #fff;
+  transition: all 0.5s ease-in-out;
+  max-width: 2em;
+}
+.text.hidden li.spaced {
+  padding-left: 0;
+}
+.text li.spaced {
+  padding-left: 0.5em;
+}
+.text.hidden li.ghost {
+  opacity: 0;
+  max-width: 0;
+}
+.flex-container {
+  display: flex;
+  flex-direction: column;
+}
+.join-btn {
+  position: fixed;
+  left: 83vh;
+}
+.login,
+.join {
+    font-family: 'Nanum Gothic Coding', monospace;
+  padding: 8px 12px;
+  margin: 10px 20px;
+    background-color: #18181a;
+    border: 1px solid white;
+    color: white;
+    border-radius: 5px;
+    transition: all 250ms ease;
+    font-size: 20px;
+    font-weight: bolder;
+}
+.login:hover,
+.join:hover {
+    background-color: burlywood;
+    color: white;
+    transform: scale(1.1);
+    cursor: pointer;
+}
+.join-btn.hidden {
+  opacity: 0;
+}
+
+.scroll {
+  position: absolute;
+  left: 120%;
+  width: 30px;
+  height: 50px;
+  margin-left: -15px;
+  border: 2px solid #fff;
+  border-radius: 50px;
+  box-sizing: border-box;
+}
+.scroll.hidden {
+    opacity: 0;
+}
+.scroll::before {
+  position: absolute;
+  top: 10px;
+  left: 50%;
+  content: '';
+  width: 6px;
+  height: 6px;
+  margin-left: -3px;
+  background-color: #fff;
+  border-radius: 100%;
+  -webkit-animation: sdb 2s infinite;
+  box-sizing: border-box;
+}
+@-webkit-keyframes sdb {
+  0% {
+    -webkit-transform: translate(0, 0);
+    opacity: 0;
+  }
+  40% {
+    opacity: 1;
+  }
+  80% {
+    -webkit-transform: translate(0, 20px);
+    opacity: 0;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+</style>
+
+<main class="page-container">
+    <div class="flex-container">
+        <ul class="text hidden">
+            <li>보</li>
+            <li>안</li>
+            <li class="ghost">공</li>
+            <li class="ghost">부</li>
+            <li class="ghost">를</li>
+            <li class="ghost">위</li>
+            <li class="ghost">한</li>
+            <li class="spaced">I</li>
+            <li class="ghost">n</li>
+            <li class="ghost">f</li>
+            <li class="ghost">o</li>
+            <li class="spaced">N</li>
+            <li class="spaced">G</li>
+            <li class="ghost">u</li>
+            <li class="ghost">i</li>
+            <li class="ghost">d</li>
+            <li class="ghost">e</li>
+            <span class="scroll"></span>
+        </ul>
+
+        <div class="join-btn hidden">
+          <button class="login" onclick="location.href='/logout'">Logout</button>
+          <button class="join" onclick="location.href='/register'">Sign Up</button>
+        </div>
+  </div>
+
+
+</main>
+
+<script>
+    $(function () {
+    const btn = $(".join-btn");
+    const ani = $(".scroll");
+    $(window).scroll(function () {
+      const scroll = $(window).scrollTop();
+
+      if (scroll >= 150) {
+        btn.removeClass("hidden");
+        ani.addClass("hidden");
+      } else {
+        btn.addClass("hidden");
+        ani.removeClass("hidden");
+      }
+    });
+  });
+</script>
+{% endblock %}
