@@ -16,6 +16,7 @@ client = MongoClient('localhost', 27017)
 db = client.dbmakers
 
 my_date = datetime.now().strftime("%d")
+# my_date = datetime(2021,2,26).strftime("%d")
 
 @app.route('/')
 def home():
@@ -223,7 +224,7 @@ def study_saving():
 def study_update(category):
     percentage = int(request.form['percentage']) / 100
     db.categories.update_one({'category': category}, {'$inc': {'level': percentage}})
-    return redirect('/study')
+    return redirect(url_for('study', user=session['user']))
 
 
 @app.route('/study/delete', methods=['POST'])
