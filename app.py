@@ -1,9 +1,7 @@
 from datetime import datetime
-from bson import ObjectId
 from flask import Flask, render_template, jsonify, request, redirect, url_for, flash, session
 from bs4 import BeautifulSoup
 from pymongo import MongoClient
-from multiprocessing import Process
 
 import re
 import time
@@ -20,7 +18,7 @@ my_date = datetime.now().strftime("%d")
 
 @app.route('/')
 def home():
-    if session['logged_in']:
+    if session.get('logged_in') is True:
         return render_template('home2.html')
     else:
         return render_template('home.html')
