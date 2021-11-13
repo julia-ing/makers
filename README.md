@@ -11,3 +11,5 @@
 
 <db 관리>
 - 유저 정보 관리 -> 채용 & 스터디 페이지 관리 (nosql mongodb)
+
+[동작 영상](https://youtu.be/ljRX-1DoKE4)
